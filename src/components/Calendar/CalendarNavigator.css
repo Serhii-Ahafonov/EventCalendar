@@ -1,0 +1,43 @@
+.calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    padding: 5px 15px;
+}
+
+.calendar-nav__action {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    text-align: center;
+    background-color: #9ee0e0;
+    border-radius: 50%;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.25);
+}
+
+.calendar-nav__filters {
+    display: flex;
+    flex-direction: row;
+}
+
+.filter > span {
+    margin: 0 5px;
+}
+
+.filter input {
+    width: 17px;
+}
+
+.previous, .next {
+    cursor: pointer;
+}
+
+.month {
+    display: none;
+}
+
+.selected {
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}

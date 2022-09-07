@@ -1,0 +1,32 @@
+table.calendar {
+    width: 100%;
+    border: 1px solid #c3c3d0;
+}
+
+thead.week-container {
+    background-color: #383f4e;
+}
+
+.week-day {
+    color: #ffffff;
+}
+
+.calendar-day {
+    height: 100px;
+    width: 150px;
+    font-size: 14px;
+    vertical-align: top;
+    border: 1px solid #c3c3d0;
+}
+
+.calendar-day.empty {
+    background-color: #c3c3d0;
+}
+
+.calendar-day:not(.empty):hover {
+    background-color: #dbecda;
+}
+
+.today {
+    background-color: #dbecda;
+}
