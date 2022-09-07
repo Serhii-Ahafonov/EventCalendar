@@ -1,0 +1,11 @@
+.calendar-day {
+    height: 250px;
+    width: 150px;
+    font-size: 14px;
+}
+
+.calendar-day__description {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 15px;
+}
