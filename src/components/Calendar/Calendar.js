@@ -2,11 +2,13 @@ import moment from 'moment';
 import './Calendar.css';
 
 function Calendar(props) {
-    const date = new Date(),
-        today = moment(date).format('YYYY-MM-DD'),
+    const currentDate = props.data.currentDate,
+        itemEvents = props.data.itemEvents,
+        date = new Date(),
+        today = moment(date).format('YYYY-MM-D'),
         weekdayShort = moment.weekdaysShort(),
-        firstDayOfMonth = moment(props.currentDate).startOf("month").format("d"),
-        lastDayOfMonth = moment(props.currentDate).endOf("month").format("d"),
+        firstDayOfMonth = moment(currentDate).startOf("month").format("d"),
+        lastDayOfMonth = moment(currentDate).endOf("month").format("d"),
         rows = [],
         blanks = [],
         daysInMonth = [],
@@ -24,13 +26,29 @@ function Calendar(props) {
         );
     }
 
-    for (let d = 1; d <= props.currentDate.daysInMonth(); d++) {
-        const isCurrentDate = today === props.currentDate.format('YYYY-MM-DD'),
-            currentDay = isCurrentDate && d === +props.currentDate.format('D') ? 'today' : '';
-
+    for (let d = 1; d <= currentDate.daysInMonth(); d++) {
+        const date = currentDate.format('YYYY-MM') + '-' + d,
+            currentDay = date === today && d === +currentDate.format('D') ? 'today' : '';
+        console.log(date, today)
         daysInMonth.push(
             <td key={d} className={`calendar-day ${currentDay}`}>
-                {d}
+                <div className="calendar-day__header">
+                    <span className="calendar-day__number">{d}</span>
+                    <span className="week-day-name"/>
+                </div>
+                <div className="calendar-day__body">
+                    <ul id="item-list">
+                        {itemEvents.map(item => {
+                            if (item.date === date) {
+                                return (
+                                    <li className="item" onClick={props.onShowForm.bind(null, item)}>
+                                        {item.title}
+                                    </li>
+                                )
+                            }
+                        })}
+                    </ul>
+                </div>
             </td>
         );
     }
@@ -61,7 +79,7 @@ function Calendar(props) {
                 </tr>
             </thead>
             <tbody>
-                {rows.map(d => (<tr>{d}</tr>))}
+                {rows.map(d => <tr>{d}</tr>)}
             </tbody>
         </table>
     );

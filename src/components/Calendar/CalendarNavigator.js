@@ -3,6 +3,7 @@ import moment from "moment";
 import './CalendarNavigator.css';
 
 function CalendarNavigator(props) {
+    const months = moment.months();
     const currentMonth = () => {
         return props.data.currentDate.format("MMMM");
     };
@@ -13,7 +14,7 @@ function CalendarNavigator(props) {
 
     const onChangeMonth = event => {
         const index = event.currentTarget.className === 'next' ? 1 : -1,
-            indexMonth = props.data.months.indexOf(currentMonth()) + index,
+            indexMonth = months.indexOf(currentMonth()) + index,
             dateObject = Object.assign({}, props.data.currentDate);
 
         props.data.setCurrentDate(moment(dateObject).set("month", indexMonth));
@@ -31,12 +32,12 @@ function CalendarNavigator(props) {
 
     return (
         <div className="calendar-nav">
-            <div className="calendar-nav__action">+</div>
+            <div className="calendar-nav__action" onClick={props.onShowForm}>+</div>
             <div className="calendar-nav__filters">
                 <div className="filter">
                     <span className="previous" onClick={onChangeMonth}>&lt;</span>
                     <span className="month-container">
-                        {props.data.months.map(data => (
+                        {months.map(data => (
                             <span className={`month ${data === currentMonth() ? "selected" : ""}`}>{data}</span>
                         ))}
                     </span>

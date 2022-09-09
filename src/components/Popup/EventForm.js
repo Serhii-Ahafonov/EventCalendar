@@ -1,98 +1,72 @@
 import './EventForm.css';
 import Modal from "../UI/Modal";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 function EventFormPopUp(props) {
-    const [enteredTitle, setEnteredTitle] = useState(props.item.enteredTitle);
-    const [enteredDescription, setEnteredDescription] = useState(props.item.enteredDescription);
-    const [enteredDate, setEnteredDate] = useState(props.item.enteredDate);
-    const [enteredTime, setEnteredTime] = useState(props.item.enteredTime);
-
     const { register, handleSubmit } = useForm();
-    const onSubmit = data => console.log(data);
 
-    const titleChangeHandler = (event) => {
-        setEnteredTitle(event.target.value);
+    const onSubmit = data => {
+        data.creationDate = props.item.creationDate;
+        props.onSave(data);
     };
-
-    const descriptionChangeHandler = (event) => {
-        setEnteredDescription(event.target.value);
-    };
-
-    const onChangeDate = (event) => {
-        setEnteredDate(event.target.value);
-    };
-
-    const onChangeTime = (event) => {
-        setEnteredTime(event.target.value);
-    };
-
-    const onSaveChanges = () => {
-        // if (enteredTitle && )
-        const newItemEvent = {
-            enteredTitle,
-            enteredDescription,
-            enteredDate,
-            enteredTime
-        };
-        props.onSave(newItemEvent);
-    };
-
-
 
     return (
         <Modal>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="header">
-                    { props.item.length
-                        ? <h3>Edit idea item</h3>
+                    { !!props.item.creationDate
+                        ? <div>
+                            <h3>Edit idea item</h3>
+                            <div className="creation-time">Created at: {props.item.creationDate}</div>
+                          </div>
                         : <h3>Add new idea Item</h3> }
                     <span className="close" onClick={props.onClose}>x</span>
                 </div>
                 <div className="body">
                     <div className="add-title">
                         <label htmlFor="">Title*</label>
-                        <input {...register("title")}
-                               className="custom"
+                        <input className="custom"
                                type="text"
                                placeholder="Title goes here"
-                               value={enteredTitle}
-                               onChange={titleChangeHandler}/>
+                               {...register("title",{
+                                   required: true,
+                                   value: props.item.title,
+                                   maxLength: 20
+                               })}/>
                         <i className="id-form"></i>
                     </div>
                     <div className="add-description">
                         <label htmlFor="">Description</label>
                         <textarea className="custom"
-                                  name=""
-                                  id=""
                                   cols="30"
                                   rows="5"
-                                  value={enteredDescription}
-                                  onChange={descriptionChangeHandler}/>
+                                  {...register("description", {
+                                      value: props.item.description
+                                  })}/>
                     </div>
                     <div className="date-container">
                         <div className="add-date">
                             <label htmlFor="">Date</label>
                             <input className="custom"
                                    type="date"
-                                   value={enteredDate}
-                                   onChange={onChangeDate}/>
+                                   {...register("date", {
+                                       value: props.item.date
+                                   })}/>
                         </div>
 
                         <div className="add-time">
                             <label htmlFor="">Begin time:</label>
                             <input className="custom"
                                    type="time"
-                                   value={enteredTime}
-                                   onChange={onChangeTime}/>
+                                   {...register("time", {
+                                       value: props.item.time
+                                   })}/>
                         </div>
                     </div>
                 </div>
                 <div className="footer">
-                    <button className="save"
-                            onClick={onSaveChanges}>SAVE</button>
-                    <input type="submit" />
+                    <button onClick={props.onDelete.bind(null, props.item)} className="delete">DELETE</button>
+                    <input className="save" type="submit" value="SAVE"/>
                 </div>
             </form>
         </Modal>
