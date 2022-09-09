@@ -58,13 +58,13 @@ function Calendar(props) {
 
     totalSlots.forEach((row, i) => {
         if (i % 7 !== 0) {
-            cells.push(row); // if index not equal 7 that means not go to next week
+            cells.push(row);
         } else {
-            rows.push(cells); // when reach next week we contain all td in last week to rows
-            cells = []; // empty container
-            cells.push(row); // in current loop we still push current row to new container
+            rows.push(cells);
+            cells = [];
+            cells.push(row);
         }
-        if (i === totalSlots.length - 1) { // when end loop we add remain date
+        if (i === totalSlots.length - 1) {
             rows.push(cells);
         }
     });

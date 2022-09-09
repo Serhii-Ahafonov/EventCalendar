@@ -31,7 +31,6 @@ function EventFormPopUp(props) {
                                {...register("title", {
                                    required: true,
                                    value: props.item.title,
-                                   maxLength: 20
                                })}/>
                         <i className="id-form"></i>
                     </div>
@@ -50,6 +49,7 @@ function EventFormPopUp(props) {
                             <input className="custom"
                                    type="date"
                                    {...register("date", {
+                                       required: true,
                                        value: props.item.date
                                    })}/>
                         </div>
@@ -66,7 +66,9 @@ function EventFormPopUp(props) {
                 </div>
                 <div className="footer">
                     {!!props.item.creationDate &&
-                    <button onClick={props.onDelete.bind(null, props.item)} className="delete">DELETE</button>}
+                    <button onClick={props.onDelete.bind(null, props.item)} className="delete">
+                        <i className="delete-icon"></i>
+                    </button>}
                     <input className="save" type="submit" value="SAVE"/>
                 </div>
             </form>
