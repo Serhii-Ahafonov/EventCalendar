@@ -3,11 +3,20 @@ import CalendarNavigator from "./components/Calendar/CalendarNavigator";
 import { useState } from "react";
 import moment from "moment";
 import EventFormPopUp from "./components/Popup/EventForm";
-import {getStorageItemsEvents, setStorageItemsEvents} from "./services/webStorage";
+import {
+    getDateFilter,
+    getStorageItemsEvents,
+    getCookieItemsEvents,
+    setDateFilter,
+    setStorageItemsEvents,
+    setCookieItemsEvents
+} from "./services/webStorage";
 
 function App() {
-    const [currentDate, setCurrentDate] = useState(moment);
-    const [itemEvents, setItemEvents] = useState(getStorageItemsEvents());
+    const storageMoment = moment(getDateFilter());
+    const date = (storageMoment.isValid() && storageMoment) || moment;
+    const [currentDate, setCurrentDate] = useState(date);
+    const [itemEvents, setItemEvents] = useState(getStorageItemsEvents() || getCookieItemsEvents());
     const [currentItemEvent, setCurrentItemEvent] = useState({});
     const [formIsShown, setFormIsShown] = useState(false);
     const props = { currentDate, setCurrentDate, itemEvents };
@@ -47,6 +56,8 @@ function App() {
     };
 
     setStorageItemsEvents(itemEvents);
+    setCookieItemsEvents(itemEvents);
+    setDateFilter(currentDate);
 
     return (
         <div>

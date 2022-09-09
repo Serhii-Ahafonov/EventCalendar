@@ -23,7 +23,7 @@ function CalendarNavigator(props) {
     const onChangeDate = event => {
         const newMonth = moment(new Date(event.target.value)).format('MMMM'),
             newYear = moment(new Date(event.target.value)).format('Y'),
-            indexMonth = props.data.months.indexOf(newMonth),
+            indexMonth = months.indexOf(newMonth),
             dateObject = Object.assign({}, props.data.currentDate);
 
         props.data.setCurrentDate(moment(dateObject).set({ 'year': newYear, 'month': indexMonth }));

@@ -5,7 +5,7 @@ function Calendar(props) {
     const currentDate = props.data.currentDate,
         itemEvents = props.data.itemEvents,
         date = new Date(),
-        today = moment(date).format('YYYY-MM-D'),
+        today = moment(date).format('YYYY-MM-DD'),
         weekdayShort = moment.weekdaysShort(),
         firstDayOfMonth = moment(currentDate).startOf("month").format("d"),
         lastDayOfMonth = moment(currentDate).endOf("month").format("d"),
@@ -27,7 +27,7 @@ function Calendar(props) {
     }
 
     for (let d = 1; d <= currentDate.daysInMonth(); d++) {
-        const date = currentDate.format('YYYY-MM') + '-' + d,
+        const date = currentDate.format('YYYY-MM') + '-' + ('0' + d).slice(-2),
             currentDay = date === today && d === +currentDate.format('D') ? 'today' : '';
 
         daysInMonth.push(

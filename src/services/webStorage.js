@@ -1,4 +1,4 @@
-const { JSON, localStorage } = window;
+const { JSON, localStorage, document } = window;
 
 const getItem = (storage, key, defaultValue) => {
   try {
@@ -18,11 +18,55 @@ const setItem = (storage, key, value) => {
 const getFromLocalStorage = (key, defaultValue) => getItem(localStorage, key, defaultValue);
 const setToLocalStorage = (key, value) => setItem(localStorage, key, value);
 
+const createCookie = (name, value, days) => {
+  var expires;
+  if (days) {
+    var date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  else {
+    expires = "";
+  }
+  document.cookie = name + "=" + JSON.stringify(value) + expires + "; path=/";
+}
+
+const getCookie = (c_name) => {
+  if (document.cookie.length > 0) {
+    let c_start = document.cookie.indexOf(c_name + "=");
+    if (c_start !== -1) {
+      c_start = c_start + c_name.length + 1;
+      let c_end = document.cookie.indexOf(";", c_start);
+      if (c_end === -1) {
+        c_end = document.cookie.length;
+      }
+      return JSON.parse(document.cookie.substring(c_start, c_end));
+    }
+  }
+  return null;
+}
+
+export const getCookieItemsEvents = () => {
+  return getCookie('cal-item-events');
+};
+
+export const setCookieItemsEvents = items => {
+  createCookie('cal-item-events', items);
+};
+
 export const getStorageItemsEvents = () => {
-  return getFromLocalStorage('cal-item-events', []);
+  return getFromLocalStorage('cal-item-events', null);
 };
 
 export const setStorageItemsEvents = items => {
   setToLocalStorage('cal-item-events', items);
+};
+
+export const getDateFilter = () => {
+  return getFromLocalStorage('cal-filter-date', null);
+};
+
+export const setDateFilter = date => {
+  setToLocalStorage('cal-filter-date', date);
 };
 
