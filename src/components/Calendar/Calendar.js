@@ -29,7 +29,7 @@ function Calendar(props) {
     for (let d = 1; d <= currentDate.daysInMonth(); d++) {
         const date = currentDate.format('YYYY-MM') + '-' + d,
             currentDay = date === today && d === +currentDate.format('D') ? 'today' : '';
-        console.log(date, today)
+
         daysInMonth.push(
             <td key={d} className={`calendar-day ${currentDay}`}>
                 <div className="calendar-day__header">

@@ -1,9 +1,9 @@
 import './EventForm.css';
 import Modal from "../UI/Modal";
-import { useForm } from "react-hook-form";
+import {useForm} from "react-hook-form";
 
 function EventFormPopUp(props) {
-    const { register, handleSubmit } = useForm();
+    const {register, handleSubmit} = useForm();
 
     const onSubmit = data => {
         data.creationDate = props.item.creationDate;
@@ -14,12 +14,12 @@ function EventFormPopUp(props) {
         <Modal>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="header">
-                    { !!props.item.creationDate
+                    {!!props.item.creationDate
                         ? <div>
                             <h3>Edit idea item</h3>
                             <div className="creation-time">Created at: {props.item.creationDate}</div>
-                          </div>
-                        : <h3>Add new idea Item</h3> }
+                        </div>
+                        : <h3>Add new idea Item</h3>}
                     <span className="close" onClick={props.onClose}>x</span>
                 </div>
                 <div className="body">
@@ -28,7 +28,7 @@ function EventFormPopUp(props) {
                         <input className="custom"
                                type="text"
                                placeholder="Title goes here"
-                               {...register("title",{
+                               {...register("title", {
                                    required: true,
                                    value: props.item.title,
                                    maxLength: 20
@@ -65,7 +65,8 @@ function EventFormPopUp(props) {
                     </div>
                 </div>
                 <div className="footer">
-                    <button onClick={props.onDelete.bind(null, props.item)} className="delete">DELETE</button>
+                    {!!props.item.creationDate &&
+                    <button onClick={props.onDelete.bind(null, props.item)} className="delete">DELETE</button>}
                     <input className="save" type="submit" value="SAVE"/>
                 </div>
             </form>
